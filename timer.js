@@ -7,20 +7,20 @@ const refs = {
 };
 
 class CountdownTimer {
-  constructor({ selector, targetDate, onTike }) {
+  constructor({ selector, targetDate }) {
     this.selector = selector;
     this.targetDate = targetDate;
-    this.onTike = onTike;
   }
 
   setInt = setInterval(() => {
     const currentTime = Date.now();
-    const timeComponents = currentTime - this.targetDate;
-    const time = this.getTimeComponents(timeComponents);
-    // console.log(timeComponents);
-
-    this.onTike(time);
+    const newTime = this.targetDate - currentTime;
+    this.getTimeComponents(newTime);
+    this.updateTimer(newTime);
   }, 1000);
+  pad(value) {
+    return String(value).padStart(2, '0');
+  }
 
   getTimeComponents(time) {
     const days = this.pad(Math.floor(time / (1000 * 60 * 60 * 24)));
@@ -29,19 +29,25 @@ class CountdownTimer {
     );
     const mins = this.pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
     const secs = this.pad(Math.floor((time % (1000 * 60)) / 1000));
-    return { days, hours, mins, secs };
-  }
-  pad(value) {
-    return String(value).padStart(2, '0');
-  }
-}
+    refs.days.textContent = `${days}`;
+    refs.hours.textContent = `${hours}`;
+    refs.minutes.textContent = `${mins}`;
+    refs.seconds.textContent = `${secs}`;
 
-function updateTimer({ days, hours, mins, secs }) {
-  refs.timerEl.textContent = `${days}:${hours}:${mins}:${secs}`;
+    // return `${days}:${hours}: ${mins}: ${secs}`;
+  }
+  updateTimer(time) {
+    if (time < 0) {
+      refs.timerEl.textContent = 'Time is up!';
+      refs.timerEl.style.textAlign = 'center';
+      refs.timerEl.style.fontSize = '100px';
+      refs.timerEl.style.marginTop = '100px';
+      refs.timerEl.style.color = 'orange';
+    }
+  }
 }
 
 const newTimer = new CountdownTimer({
-  onTike: updateTimer,
   selector: '#timer-1',
-  targetDate: new Date('Aug 11, 2021'),
+  targetDate: new Date('Aug 1, 2021'),
 });
