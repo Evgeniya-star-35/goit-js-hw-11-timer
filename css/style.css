@@ -17,17 +17,25 @@ body {
 .field {
   padding: 60px;
   margin-left: 20px;
-  border-radius: 3px;
+  border-radius: 10px;
   background: #00bf7f;
   display: inline-block;
 }
+/* .field:hover {
+  background-color: aqua;
+  border: 10px solid rgb(48, 230, 191);
+} */
 
 .value {
   padding: 40px;
-  border-radius: 3px;
+  border-radius: 10px;
   background: #00816a;
   display: inline-block;
 }
+/* .value:hover {
+  background-color: rgb(47, 233, 146);
+  border: 10px solid rgb(48, 230, 230);
+} */
 
 .label {
   display: block;
